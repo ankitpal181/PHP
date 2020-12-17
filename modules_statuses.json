@@ -1,0 +1,6 @@
+{
+    "Dashboard": true,
+    "Order": true,
+    "Invoice": true,
+    "Menu": true
+}
