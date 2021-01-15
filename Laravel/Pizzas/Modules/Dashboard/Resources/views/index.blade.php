@@ -1,9 +1,13 @@
 @extends('dashboard::layouts.master')
 
-@section('content')
-    <h1>Hello World</h1>
+@section('sidetab')
+    <nav class="links">
+        <a href="/menu"><p>Menu</p></a>
+        <a href="/order"><p>Orders</p></a>
+        <a href="/invoice"><p>Invoice</p></a>
+    </nav>
+@endsection
 
-    <p>
-        This view is loaded from module: {!! config('dashboard.name') !!}
-    </p>
+@section('content')
+    <p>Welcome User</p>
 @endsection

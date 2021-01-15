@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => 'b82dcdbb4ad7e1e749c2c0cdecea5dc81bb1b959',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -51,6 +51,33 @@
       array (
       ),
       'reference' => '8f8a6e48c5ecb0f991c2fdcf5f154a47d85f9ffd',
+    ),
+    'doctrine/cache' => 
+    array (
+      'pretty_version' => '1.10.2',
+      'version' => '1.10.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '13e3381b25847283a91948d04640543941309727',
+    ),
+    'doctrine/dbal' => 
+    array (
+      'pretty_version' => '2.10.4',
+      'version' => '2.10.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '47433196b6390d14409a33885ee42b6208160643',
+    ),
+    'doctrine/event-manager' => 
+    array (
+      'pretty_version' => '1.1.1',
+      'version' => '1.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '41370af6a30faa9dc0368c4a6814d596e81aba7f',
     ),
     'doctrine/inflector' => 
     array (
@@ -417,12 +444,12 @@
     ),
     'laravel/laravel' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => 'b82dcdbb4ad7e1e749c2c0cdecea5dc81bb1b959',
     ),
     'laravel/tinker' => 
     array (
@@ -432,6 +459,15 @@
       array (
       ),
       'reference' => '45884b526e10a88a1b179fa1a1a24d5468c668c2',
+    ),
+    'laravel/ui' => 
+    array (
+      'pretty_version' => 'v2.5.0',
+      'version' => '2.5.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd01a705763c243b07be795e9d1bb47f89260f73d',
     ),
     'league/commonmark' => 
     array (
@@ -902,6 +938,15 @@
       array (
       ),
       'reference' => '99732be0ddb3361e16ad77b68ba41efc8e979019',
+    ),
+    'squizlabs/php_codesniffer' => 
+    array (
+      'pretty_version' => '3.5.8',
+      'version' => '3.5.8.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9d583721a7157ee997f235f327de038e7ea6dac4',
     ),
     'swiftmailer/swiftmailer' => 
     array (

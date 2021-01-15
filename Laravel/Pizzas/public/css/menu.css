@@ -1,0 +1,80 @@
+.action-button-container {
+  text-align: end;
+}
+
+.category {
+  margin: 10px 0px;
+  max-height: 315px;
+}
+
+.category-heading {
+  margin: 0px;
+  padding: 5px 0px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: large;
+  font-weight: 600;
+  color: #808080;
+}
+
+.filter-menu-field {
+  border: none;
+  background-color: #eee;
+  padding: 5px 10px;
+  color: #808080;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0px;
+}
+
+.item-details {
+  border-bottom: 1px dotted #808080;
+}
+
+.item-name {
+  margin: 0px;
+  padding: 5px 10px;
+}
+
+.item-price {
+  float: right;
+}
+
+.item-not-available {
+  color: #f00 !important;
+  text-decoration: line-through;
+}
+
+.edit-field-container {
+  display: flex;
+}
+
+.edit-field-container .item-name {
+  width: 70%;
+}
+
+.edit-field-container .item-price {
+  width: 20%;
+  float: none;
+}
+
+.edit-field-container .item-available {
+  width: 10%;
+  border-right: none;
+}
+
+.hidden-checkbox {
+  display: none;
+}
+
+.edit-field {
+  border: none;
+  border-right: 1px dotted #808080;
+}
+
+.add-field-container {
+  display: flex;
+  flex-flow: column;
+}

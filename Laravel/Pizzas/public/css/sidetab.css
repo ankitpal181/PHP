@@ -1,0 +1,15 @@
+.side-tab {
+  width: 15%;
+  background-color: #003;
+}
+
+.links a {
+  color: #ccc;
+}
+
+.links p {
+  background-color: #004;
+  margin: 0;
+  padding: 8px 16px;
+  border-bottom: 1px solid #333;
+}

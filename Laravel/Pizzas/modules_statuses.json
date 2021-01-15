@@ -1,6 +1,7 @@
 {
     "Dashboard": true,
-    "Order": true,
+    "Menu": true,
     "Invoice": true,
-    "Menu": true
+    "Order": true,
+    "Test": true
 }

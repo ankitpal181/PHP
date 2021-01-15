@@ -5,75 +5,187 @@ namespace Modules\Menu\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Menu\Entities\Menu;
+use App\Http\Requests\StoreMenu;
+use App\Http\Requests\UpdateMenu;
+use App\Events\OrderCreated;
 
 class MenuController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
+     * 
      * @return Renderable
      */
     public function index()
     {
-        return view('menu::index');
+        $data = Menu::all();
+        $menu = [];
+        try {
+            foreach ($data as $row) {
+                if (array_key_exists($row['category'], $menu)) {
+                    $menu[$row['category']][] = $row;
+                } else {
+                    $menu[$row['category']] = [$row];
+                }
+            }
+        } catch (\Exception $error) {
+            report($error);
+        }
+        return view('menu::index', ['menu' => $menu]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating/deleting multiple new resources.
+     * 
      * @return Renderable
      */
     public function create()
     {
-        return view('menu::create');
+        $data = Menu::all();
+        $menu = [];
+        try {
+            foreach ($data as $row) {
+                if (array_key_exists($row['category'], $menu)) {
+                    $menu[$row['category']][] = $row;
+                } else {
+                    $menu[$row['category']] = [$row];
+                }
+            }
+        } catch (\Exception $error) {
+            report($error);
+        }
+        return view('menu::create', ['menu' => $menu]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
+     * Store newly created resources in storage or redirecting to destroy
+     * method for deletion.
+     * 
+     * @param StoreMenu $request
+     * @return Redirect '/menu'
      */
-    public function store(Request $request)
+    public function store(StoreMenu $request)
     {
-        //
+        if ($request->isMethod('post')) {
+            $validatedData = $request->validated();
+
+            if ($request->has('ids')) {
+                $this->destroy($validatedData['ids']);
+            }
+
+            if ($request->has('categories')) {
+                DB::beginTransaction();
+                foreach ($validatedData['categories'] as $key => $category) {
+                    $item = new Menu();
+                    $item->category = $category;
+                    try {
+                        $item->item = $validatedData['names'][$key];
+                        $item->price = $validatedData['prices'][$key];
+                        $item->available = $validatedData['availables'][$key];
+                        $item->save();
+                    } catch (\Exception $error) {
+                        DB::rollback();
+                        report($error);
+                        return redirect('/menu');
+                    }
+                }
+                DB::commit();
+                event(new OrderCreated());
+            }
+
+            return redirect('/menu');
+        }
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
+     * Show the form for editing multiple resources.
+     * 
      * @return Renderable
      */
-    public function show($id)
+    public function edit()
     {
-        return view('menu::show');
+        $data = Menu::all();
+        $menu = [];
+        try {
+            foreach ($data as $row) {
+                if (array_key_exists($row['category'], $menu)) {
+                    $menu[$row['category']][] = $row;
+                } else {
+                    $menu[$row['category']] = [$row];
+                }
+            }
+        } catch (\Exception $error) {
+            report($error);
+        }
+
+        return view('menu::edit', ['menu' => $menu]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
+     * Update multiple specified resources in storage.
+     * 
+     * @param UpdateMenu $request
+     * @return Redirect '/menu' or 'Error'
      */
-    public function edit($id)
+    public function update(UpdateMenu $request)
     {
-        return view('menu::edit');
+        if ($request->isMethod('post')) {
+            $validatedData = $request->validated();
+            
+            if ($request->has('ids')) {
+                DB::beginTransaction();
+                foreach ($validatedData['ids'] as $id) {
+                    try {
+                        $item = Menu::find($id);
+                        $item->item = $validatedData['names'][$id];
+                        $item->available = $validatedData['availables'][$id];
+                        $item->price = $validatedData['prices'][$id];
+                        $item->updated_at = date('Y-m-d');
+                        $item->save();
+                    } catch (\Exception $error) {
+                        DB::rollback();
+                        report($error);
+                        return redirect('/menu');
+                    }
+                }
+                DB::commit();
+            }
+
+            return redirect('/menu');
+        }
+
+        return "Error! Invalid Request";
     }
 
     /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
+     * Remove the specified multiple resources from storage.
+     * 
+     * @param array $ids
+     * @return 'Success'
      */
-    public function update(Request $request, $id)
+    public function destroy($ids = [])
     {
-        //
-    }
+        foreach ($ids as $id) {
+            try {
+                $item = Menu::find($id);
+                $item->delete();
+            } catch (\Exception $error) {
+                // Add a rollback for transaction so far to avoid partial data delete
+                report($error);
+            }
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+        return "Success";
     }
 }
