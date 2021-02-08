@@ -14,3 +14,5 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+// $router->get('/invoice/{id}/download', ['as' => 'index_invoice', 'InvoiceController@index']);
+$router->get('/invoice/{id}', 'InvoiceController@index');
